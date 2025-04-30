@@ -1,0 +1,7 @@
+- 👋 Hi, I’m @Asmitcod  
+- 👀 I’m interested in AI, Robotics, Java,Web-dev  
+- 🌱 I’m currently learning Full stack and WebSocket-based real-time apps  
+- 💞️ I’m looking to collaborate on AI-based tools and smart automation projects  
+- 📫 How to reach me: bishtasmit15@gmail.com or connect via [LinkedIn](www.linkedin.com/in/asmit-bisht-a09682293)  
+- 😄 Pronouns: He/Him  
+- ⚡ Fun fact: The first computer "bug" was an actual moth found inside a Harvard Mark II computer in 1947.!
