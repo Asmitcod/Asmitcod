@@ -30,7 +30,7 @@
 </p>
 
 <p align="center">
-  <img src="./status-card.svg?v=1" width="100%" alt="Status" />
+  <img src="./status-hud.svg?v=1" width="100%" alt="Status" />
 </p>
 
 <p align="center">
