@@ -1,0 +1,45 @@
+
+name: Update GitHub Profile Art
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          pip install requests beautifulsoup4
+
+      - name: Fetch contributions
+        env:
+          GH_PROFILE_USER: Asmitcod
+        run: |
+          python scripts/fetch_contributions.py
+
+      - name: Generate info card
+        run: |
+          python scripts/make_info_card.py
+
+      - name: Commit updated profile art
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/contributions.json info-card.svg
+          git diff --cached --quiet || git commit -m "Update GitHub profile art"
+          git push
