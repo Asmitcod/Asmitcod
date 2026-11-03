@@ -1,4 +1,3 @@
-
 #!/usr/bin/env python3
 """
 Render a clean GitHub-style contribution heatmap.
@@ -6,13 +5,12 @@ Render a clean GitHub-style contribution heatmap.
 Input:  data/contributions.json
 Output: contrib-heatmap.svg
 
-Features:
-- Minimal dark background
-- Rounded GitHub-style contribution cells
-- Month and weekday labels
-- Contribution total
-- Staggered one-time animation
-- STATIC=1 for frozen previews
+Animation:
+1. Opening: cells reveal from left to right (plays once).
+2. Streak comet: after the opening finishes, a glowing head travels cell by
+   cell along your longest streak, leaving a fading trail, and then repeats.
+
+STATIC=1 gives a frozen frame (no animation, no comet) for previews.
 """
 
 import datetime
@@ -53,9 +51,22 @@ PAD_X = 30
 PAD_TOP = 28
 LEFT_LABEL_W = 40
 
+# Opening reveal (left to right)
 COL_T = 0.015
 ROW_T = 0.035
 CELL_DUR = 0.4
+
+# Streak comet
+COMET_GLOW = "#39d353"      # soft halo around the lit cell
+COMET_CORE = "#c9ffd9"      # bright core of the lit cell
+COMET_WAIT = 0.5            # seconds to wait after the opening before the comet starts
+COMET_TARGET = 4.0          # seconds for the head to cross the whole streak
+COMET_MIN_STEP = 0.03       # fastest hop between cells (long streaks)
+COMET_MAX_STEP = 0.25       # slowest hop between cells (short streaks)
+COMET_HEAD = 0.10           # seconds for a cell to flare up to full brightness
+COMET_TRAIL_CELLS = 8       # how many cells long the fading tail is
+COMET_TRAIL_MAX = 1.2       # cap on tail duration in seconds
+COMET_PAUSE = 2.0           # rest between loops
 
 
 # --------------------------------------------------
@@ -112,6 +123,38 @@ def load_data():
     days.sort(key=lambda d: d["date"])
 
     return data
+
+
+# --------------------------------------------------
+# Longest streak
+# --------------------------------------------------
+
+def longest_streak(days):
+    """Return the dates of the longest run of consecutive active days.
+
+    On a tie, the most recent streak wins.
+    """
+
+    best = []
+    run = []
+
+    for d in sorted(days, key=lambda d: d["date"]):
+
+        date = datetime.date.fromisoformat(d["date"])
+
+        if int(d["count"]) <= 0:
+            run = []
+            continue
+
+        if run and (date - run[-1]).days == 1:
+            run.append(date)
+        else:
+            run = [date]
+
+        if len(run) >= len(best):
+            best = list(run)
+
+    return best
 
 
 # --------------------------------------------------
@@ -194,15 +237,35 @@ def get_month_labels(grid):
 
 
 # --------------------------------------------------
+# Comet timing
+# --------------------------------------------------
+
+def comet_timing(columns, n_cells):
+    """Work out when the comet starts, how fast it hops and how long a loop is."""
+
+    reveal_end = (columns - 1) * COL_T + 6 * ROW_T + CELL_DUR
+    start = reveal_end + COMET_WAIT
+
+    step = COMET_TARGET / max(n_cells, 1)
+    step = max(COMET_MIN_STEP, min(COMET_MAX_STEP, step))
+
+    trail = min(COMET_TRAIL_CELLS * step, COMET_TRAIL_MAX)
+
+    cycle = (n_cells - 1) * step + COMET_HEAD + trail + COMET_PAUSE
+
+    return start, step, trail, cycle
+
+
+# --------------------------------------------------
 # Animation
 # --------------------------------------------------
 
-def make_css():
+def make_css(comet=None):
 
     if STATIC:
         return ".cell { opacity: 1; }"
 
-    return f"""
+    css = f"""
     @keyframes reveal {{
         from {{
             opacity: 0;
@@ -218,14 +281,46 @@ def make_css():
         opacity: 0;
         animation: reveal {CELL_DUR}s ease-out both;
     }}
+    """
 
-    @media (prefers-reduced-motion: reduce) {{
-        .cell {{
-            animation: none;
-            opacity: 1;
-        }}
+    reduced = ".cell { animation: none; opacity: 1; }"
+
+    if comet:
+
+        _, _, trail, cycle = comet
+
+        p_head = COMET_HEAD / cycle * 100
+        p_mid = (COMET_HEAD + trail * 0.35) / cycle * 100
+        p_end = (COMET_HEAD + trail) / cycle * 100
+
+        # Every streak cell shares this keyframe and cycle length; only the
+        # animation-delay differs, which is what makes the head "travel".
+        css += f"""
+    @keyframes comet {{
+        0%            {{ opacity: 0;  transform: scale(1); }}
+        {p_head:.3f}% {{ opacity: 1;  transform: scale(1.18); }}
+        {p_mid:.3f}%  {{ opacity: .4; transform: scale(1); }}
+        {p_end:.3f}%  {{ opacity: 0;  transform: scale(1); }}
+        100%          {{ opacity: 0;  transform: scale(1); }}
+    }}
+
+    .comet {{
+        opacity: 0;
+        transform-box: fill-box;
+        transform-origin: center;
+        pointer-events: none;
+        animation: comet {cycle:.3f}s linear infinite backwards;
     }}
     """
+        reduced += " .comet { animation: none; opacity: 0; }"
+
+    css += f"""
+    @media (prefers-reduced-motion: reduce) {{
+        {reduced}
+    }}
+    """
+
+    return css
 
 
 # --------------------------------------------------
@@ -241,6 +336,11 @@ def render(data):
 
     columns = len(grid)
 
+    # Longest streak -> comet path (chronological order = grid order)
+    streak = longest_streak(days)
+    use_comet = (not STATIC) and len(streak) >= 2
+    comet = comet_timing(columns, len(streak)) if use_comet else None
+
     grid_left = PAD_X + LEFT_LABEL_W
     grid_top = PAD_TOP + 40
 
@@ -251,6 +351,7 @@ def render(data):
     height = grid_top + grid_height + 55
 
     parts = []
+    positions = {}
 
     # SVG opening
     parts.append(
@@ -260,7 +361,7 @@ def render(data):
         f'font-family="Arial, Helvetica, sans-serif">'
     )
 
-    parts.append(f'<style>{make_css()}</style>')
+    parts.append(f'<style>{make_css(comet)}</style>')
 
     # Plain dark background
     parts.append(
@@ -303,7 +404,7 @@ def render(data):
             f'{name}</text>'
         )
 
-    # Contribution cells
+    # Contribution cells (opening reveal: left to right)
     for ci, column in enumerate(grid):
 
         for ri, cell in enumerate(column):
@@ -315,6 +416,8 @@ def render(data):
 
             x = grid_left + ci * STEP
             y = grid_top + ri * STEP
+
+            positions[date_s] = (x, y)
 
             delay = ci * COL_T + ri * ROW_T
 
@@ -335,6 +438,27 @@ def render(data):
                 f'<title>{html.escape(date_s)}: '
                 f'{count} contribution{plural}</title>'
                 f'</rect>'
+            )
+
+    # Streak comet overlay (drawn on top of the cells)
+    if comet:
+
+        start, step, _, _ = comet
+
+        for i, date in enumerate(streak):
+
+            x, y = positions[date.isoformat()]
+            delay = start + i * step
+
+            parts.append(
+                f'<g class="comet" style="animation-delay:{delay:.3f}s">'
+                f'<rect x="{x - 3}" y="{y - 3}" '
+                f'width="{CELL + 6}" height="{CELL + 6}" '
+                f'rx="5" fill="{COMET_GLOW}" opacity=".35"/>'
+                f'<rect x="{x}" y="{y}" '
+                f'width="{CELL}" height="{CELL}" '
+                f'rx="3" fill="{COMET_CORE}"/>'
+                f'</g>'
             )
 
     # Contribution total
@@ -382,7 +506,7 @@ def render(data):
 
     parts.append("</svg>")
 
-    return "\n".join(parts)
+    return "\n".join(parts), streak, comet
 
 
 # --------------------------------------------------
@@ -397,9 +521,9 @@ if __name__ == "__main__":
 
         data = load_data()
 
-        print("Rendering clean GitHub-style heatmap...")
+        print("Rendering heatmap with opening reveal + streak comet...")
 
-        svg = render(data)
+        svg, streak, comet = render(data)
 
         OUT_PATH.write_text(svg, encoding="utf-8")
 
@@ -407,6 +531,12 @@ if __name__ == "__main__":
         print(f"File: {OUT_PATH}")
         print(f"Size: {len(svg):,} bytes")
         print(f"Static mode: {STATIC}")
+
+        if streak:
+            print(f"Longest streak: {len(streak)} days "
+                  f"({streak[0]} to {streak[-1]})")
+        if comet:
+            print(f"Comet starts at {comet[0]:.1f}s, loops every {comet[3]:.1f}s")
 
     except Exception as error:
 
