@@ -1,9 +1,5 @@
 <h3 align="center"><code>asmit@github ~ $ ./contributions.sh</code></h3>
 
-<p align="center">
-  <img src="./contrib-heatmap.svg" width="100%" alt="GitHub contribution heatmap" />
-</p>
-
 <h3 align="center"><code>asmit@github ~ $ whoami</code></h3>
 
 <table align="center">
@@ -16,6 +12,10 @@
     </td>
   </tr>
 </table>
+
+<p align="center">
+  <img src="./contrib-heatmap.svg" width="100%" alt="GitHub contribution heatmap" />
+</p>
 
 <h3 align="center"><code>asmit@github ~ $ tech_stack.sh</code></h3>
 
