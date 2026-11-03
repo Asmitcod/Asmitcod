@@ -30,6 +30,10 @@
 </p>
 
 <p align="center">
+  <img src="./status-card.svg?v=1" width="100%" alt="Status" />
+</p>
+
+<p align="center">
   <a href="https://asmitbisht.live">
     <img src="https://img.shields.io/badge/Portfolio-asmitbisht.live-0d1117?style=for-the-badge&logo=vercel&logoColor=white" alt="Portfolio" />
   </a>

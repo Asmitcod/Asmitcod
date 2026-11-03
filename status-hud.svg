@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="396" viewBox="0 0 800 396" role="img" aria-label="Status HUD">
+  <defs>
+    <clipPath id="clip"><path d="M18,1 H799 V378 L782,395 H1 V18 Z"/></clipPath>
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="2.6" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <radialGradient id="bg" cx="30%" cy="20%" r="95%">
+      <stop offset="0" stop-color="#0b1230"/><stop offset="1" stop-color="#04050d"/>
+    </radialGradient>
+    <linearGradient id="scan" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#00f0ff" stop-opacity="0"/>
+      <stop offset=".5" stop-color="#00f0ff" stop-opacity=".13"/>
+      <stop offset="1" stop-color="#00f0ff" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="div" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#00f0ff" stop-opacity=".7"/>
+      <stop offset="1" stop-color="#ff2bd6" stop-opacity=".7"/>
+    </linearGradient>
+    <pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse">
+      <path d="M28 0H0V28" fill="none" stroke="#00f0ff" stroke-opacity=".06"/>
+    </pattern>
+    <pattern id="lines" width="4" height="4" patternUnits="userSpaceOnUse">
+      <rect width="4" height="1.4" fill="#000" fill-opacity=".24"/>
+    </pattern>
+  </defs>
+  <style>
+    text { font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace; }
+    
+    .frame { stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw 1.4s ease-out forwards; }
+    @keyframes draw { to { stroke-dashoffset: 0; } }
+    .fade { animation: fadein .6s ease-out both; }
+    @keyframes fadein { from { opacity: 0; } to { opacity: 1; } }
+    .row { animation: rowin .7s ease-out both; }
+    @keyframes rowin {
+      0% { opacity: 0; transform: translateX(-14px); }
+      40% { opacity: 1; } 50% { opacity: .35; } 60% { opacity: 1; }
+      100% { opacity: 1; transform: none; }
+    }
+    .num { animation: numin 1s linear both; }
+    @keyframes numin {
+      0% { opacity: 0; } 15% { opacity: 1; } 25% { opacity: .2; } 35% { opacity: 1; }
+      45% { opacity: .5; } 55%, 100% { opacity: 1; }
+    }
+    .g1 { animation: glitch1 7s infinite 3s; }
+    .g2 { animation: glitch2 7s infinite 3s; }
+    @keyframes glitch1 {
+      0%, 90%, 100% { opacity: 0; transform: translate(0, 0); }
+      91% { opacity: .85; transform: translate(-4px, 1px); }
+      93% { opacity: .85; transform: translate(3px, -1px); }
+      95% { opacity: 0; }
+    }
+    @keyframes glitch2 {
+      0%, 90%, 100% { opacity: 0; transform: translate(0, 0); }
+      91% { opacity: .85; transform: translate(4px, -1px); }
+      93% { opacity: .85; transform: translate(-3px, 1px); }
+      95% { opacity: 0; }
+    }
+    .seg { animation: segon .25s ease-out both; }
+    @keyframes segon { from { opacity: 0; } to { opacity: 1; } }
+    .pulse { animation: segon .25s ease-out both, pulse 1.2s ease-in-out infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .3; } }
+    .led { animation: ledblink 1.6s ease-in-out infinite; }
+    @keyframes ledblink { 0%, 100% { opacity: 1; } 50% { opacity: .25; } }
+    .scan { animation: scan 5s linear infinite; }
+    @keyframes scan { from { transform: translateY(-70px); } to { transform: translateY(396px); } }
+    @media (prefers-reduced-motion: reduce) {
+      .frame { animation: none; stroke-dasharray: none; stroke-dashoffset: 0; }
+      .fade, .row, .num, .seg, .pulse, .led { animation: none; }
+      .g1, .g2, .scan { display: none; }
+    }
+    
+  </style>
+  <path d="M18,1 H799 V378 L782,395 H1 V18 Z" fill="url(#bg)"/><g clip-path="url(#clip)"><rect width="800" height="396" fill="url(#grid)"/></g><path d="M25,8 H792 V371 L775,388 H8 V25 Z" fill="none" stroke="#ff2bd6" stroke-opacity=".35" stroke-width="1"/><path d="M670,1 H799" stroke="#ff2bd6" stroke-width="3" filter="url(#glow)"/><path d="M1,395 H130" stroke="#ff2bd6" stroke-width="3" filter="url(#glow)"/><g class="fade" style="animation-delay:0.60s"><text x="36" y="40" font-size="15" font-weight="700" letter-spacing="3" fill="#00f0ff" filter="url(#glow)"><tspan fill="#ff2bd6">//</tspan> STATUS.SYS</text><circle class="led" cx="660" cy="35" r="4" fill="#00f0ff" filter="url(#glow)" style="animation-delay:0.60s"/><text x="764" y="40" text-anchor="end" font-size="12" letter-spacing="2" fill="#6fa8b8">SYS ONLINE</text><line x1="36" y1="58" x2="764" y2="58" stroke="#00f0ff" stroke-opacity=".35"/></g><text x="36" y="98" font-size="11" letter-spacing="3" fill="#ff2bd6" class="fade" style="animation-delay:0.80s">T-MINUS</text><text class="g1" x="36" y="172" font-size="84" font-weight="700" fill="#ff2bd6" opacity="0">270</text><text class="g2" x="36" y="172" font-size="84" font-weight="700" fill="#00f0ff" opacity="0">270</text><text class="num" x="36" y="172" font-size="84" font-weight="700" fill="#e8f7ff" filter="url(#glow)" style="animation-delay:0.90s">270</text><text x="38" y="196" font-size="11" letter-spacing="2" fill="#6fa8b8" class="fade" style="animation-delay:1.20s">DAYS TO GRADUATION</text><rect x="36.00" y="216" width="5.56" height="12" fill="#0f2a33"/><rect x="43.56" y="216" width="5.56" height="12" fill="#0f2a33"/><rect x="51.12" y="216" width="5.56" height="12" fill="#0f2a33"/><rect x="58.69" y="216" width="5.56" height="12" fill="#0f2a33"/><rect x="66.25" y="216" width="5.56" height="12" fill="#0f2a33"/><rect x="73.81" y="216" width="5.56" height="12" fill="#0f2a33"/><rect x="81.38" y="216" width="5.56" height="12" fill="#0f2a33"/><rect x="88.94" y="216" width="5.56" height="12" fill="#0f2a33"/><rect x="96.50" y="216" width="5.56" height="12" fill="#0f2a33"/><rect x="104.06" y="216" width="5.56" height="12" fill="#0f2a33"/><rect x="111.62" y="216" width="5.56" height="12" fill="#0f2a33"/><rect x="119.19" y="216" width="5.56" height="12" fill="#0f2a33"/><rect x="126.75" y="216" width="5.56" height="12" fill="#0f2a33"/><rect x="134.31" y="216" width="5.56" height="12" fill="#0f2a33"/><rect x="141.88" y="216" width="5.56" height="12" fill="#0f2a33"/><rect x="149.44" y="216" width="5.56" height="12" fill="#0f2a33"/><rect x="157.00" y="216" width="5.56" height="12" fill="#0f2a33"/><rect x="164.56" y="216" width="5.56" height="12" fill="#0f2a33"/><rect x="172.12" y="216" width="5.56" height="12" fill="#0f2a33"/><rect x="179.69" y="216" width="5.56" height="12" fill="#0f2a33"/><rect x="187.25" y="216" width="5.56" height="12" fill="#0f2a33"/><rect x="194.81" y="216" width="5.56" height="12" fill="#0f2a33"/><rect x="202.38" y="216" width="5.56" height="12" fill="#0f2a33"/><rect x="209.94" y="216" width="5.56" height="12" fill="#0f2a33"/><rect x="217.50" y="216" width="5.56" height="12" fill="#0f2a33"/><rect x="225.06" y="216" width="5.56" height="12" fill="#0f2a33"/><rect x="232.62" y="216" width="5.56" height="12" fill="#0f2a33"/><rect x="240.19" y="216" width="5.56" height="12" fill="#0f2a33"/><rect x="247.75" y="216" width="5.56" height="12" fill="#0f2a33"/><rect x="255.31" y="216" width="5.56" height="12" fill="#0f2a33"/><rect x="262.88" y="216" width="5.56" height="12" fill="#0f2a33"/><rect x="270.44" y="216" width="5.56" height="12" fill="#0f2a33"/><rect class="seg" x="36.00" y="216" width="5.56" height="12" fill="#00f0ff" filter="url(#glow)" style="animation-delay:1.60s"/><rect class="seg" x="43.56" y="216" width="5.56" height="12" fill="#00f0ff" filter="url(#glow)" style="animation-delay:1.63s"/><rect class="seg" x="51.12" y="216" width="5.56" height="12" fill="#00f0ff" filter="url(#glow)" style="animation-delay:1.66s"/><rect class="seg" x="58.69" y="216" width="5.56" height="12" fill="#00f0ff" filter="url(#glow)" style="animation-delay:1.69s"/><rect class="seg" x="66.25" y="216" width="5.56" height="12" fill="#00f0ff" filter="url(#glow)" style="animation-delay:1.72s"/><rect class="seg" x="73.81" y="216" width="5.56" height="12" fill="#00f0ff" filter="url(#glow)" style="animation-delay:1.75s"/><rect class="seg" x="81.38" y="216" width="5.56" height="12" fill="#00f0ff" filter="url(#glow)" style="animation-delay:1.78s"/><rect class="seg" x="88.94" y="216" width="5.56" height="12" fill="#00f0ff" filter="url(#glow)" style="animation-delay:1.81s"/><rect class="seg" x="96.50" y="216" width="5.56" height="12" fill="#00f0ff" filter="url(#glow)" style="animation-delay:1.84s"/><rect class="seg" x="104.06" y="216" width="5.56" height="12" fill="#00f0ff" filter="url(#glow)" style="animation-delay:1.87s"/><rect class="seg" x="111.62" y="216" width="5.56" height="12" fill="#00f0ff" filter="url(#glow)" style="animation-delay:1.90s"/><rect class="seg" x="119.19" y="216" width="5.56" height="12" fill="#00f0ff" filter="url(#glow)" style="animation-delay:1.93s"/><rect class="seg" x="126.75" y="216" width="5.56" height="12" fill="#00f0ff" filter="url(#glow)" style="animation-delay:1.96s"/><rect class="seg" x="134.31" y="216" width="5.56" height="12" fill="#00f0ff" filter="url(#glow)" style="animation-delay:1.99s"/><rect class="seg" x="141.88" y="216" width="5.56" height="12" fill="#00f0ff" filter="url(#glow)" style="animation-delay:2.02s"/><rect class="seg" x="149.44" y="216" width="5.56" height="12" fill="#00f0ff" filter="url(#glow)" style="animation-delay:2.05s"/><rect class="seg" x="157.00" y="216" width="5.56" height="12" fill="#00f0ff" filter="url(#glow)" style="animation-delay:2.08s"/><rect class="seg" x="164.56" y="216" width="5.56" height="12" fill="#00f0ff" filter="url(#glow)" style="animation-delay:2.11s"/><rect class="seg" x="172.12" y="216" width="5.56" height="12" fill="#00f0ff" filter="url(#glow)" style="animation-delay:2.14s"/><rect class="seg" x="179.69" y="216" width="5.56" height="12" fill="#00f0ff" filter="url(#glow)" style="animation-delay:2.17s"/><rect class="seg" x="187.25" y="216" width="5.56" height="12" fill="#00f0ff" filter="url(#glow)" style="animation-delay:2.20s"/><rect class="seg" x="194.81" y="216" width="5.56" height="12" fill="#00f0ff" filter="url(#glow)" style="animation-delay:2.23s"/><rect class="seg" x="202.38" y="216" width="5.56" height="12" fill="#00f0ff" filter="url(#glow)" style="animation-delay:2.26s"/><rect class="seg" x="209.94" y="216" width="5.56" height="12" fill="#00f0ff" filter="url(#glow)" style="animation-delay:2.29s"/><rect class="seg" x="217.50" y="216" width="5.56" height="12" fill="#00f0ff" filter="url(#glow)" style="animation-delay:2.32s"/><rect class="seg pulse" x="225.06" y="216" width="5.56" height="12" fill="#00f0ff" filter="url(#glow)" style="animation-delay:2.35s,2.85s"/><text x="36" y="252" font-size="12" letter-spacing="2" fill="#00f0ff" class="fade" style="animation-delay:1.60s">82% COMPLETE</text><text x="36" y="272" font-size="10.5" letter-spacing="1.5" fill="#6fa8b8" class="fade" style="animation-delay:1.70s">AUG 2023 — JUL 2027</text><line x1="300" y1="78" x2="300" y2="330" stroke="url(#div)" stroke-width="1.5" class="fade" style="animation-delay:1.00s"/><g class="row" style="animation-delay:1.00s"><text x="324" y="98" font-size="10.5" font-weight="700" letter-spacing="2.5" fill="#00f0ff">BUILDING</text><text x="324" y="120" font-size="14" fill="#e8f7ff">a self-animating GitHub profile + portfolio</text><line x1="324" y1="134" x2="764" y2="134" stroke="#00f0ff" stroke-opacity=".12"/></g><g class="row" style="animation-delay:1.18s"><text x="324" y="148" font-size="10.5" font-weight="700" letter-spacing="2.5" fill="#ff2bd6">LEARNING</text><text x="324" y="170" font-size="14" fill="#e8f7ff">reinforcement learning · ROS navigation</text><line x1="324" y1="184" x2="764" y2="184" stroke="#00f0ff" stroke-opacity=".12"/></g><g class="row" style="animation-delay:1.36s"><text x="324" y="198" font-size="10.5" font-weight="700" letter-spacing="2.5" fill="#ffe14d">CLASS OF</text><text x="324" y="220" font-size="14" fill="#e8f7ff">2027 · B.Tech CS (AI &amp; Robotics) · VIT Chennai</text><line x1="324" y1="234" x2="764" y2="234" stroke="#00f0ff" stroke-opacity=".12"/></g><g class="row" style="animation-delay:1.54s"><text x="324" y="248" font-size="10.5" font-weight="700" letter-spacing="2.5" fill="#39ff88">OPEN TO</text><circle class="led" cx="329" cy="265" r="5" fill="#39ff88" filter="url(#glow)" style="animation-delay:1.94s"/><text x="344" y="270" font-size="14" fill="#39ff88">open to internships &amp; roles</text><line x1="324" y1="284" x2="764" y2="284" stroke="#00f0ff" stroke-opacity=".12"/></g><g class="row" style="animation-delay:1.72s"><text x="324" y="298" font-size="10.5" font-weight="700" letter-spacing="2.5" fill="#00f0ff">REACH</text><text x="324" y="320" font-size="14" fill="#e8f7ff">github.com/Asmitcod</text><line x1="324" y1="334" x2="764" y2="334" stroke="#00f0ff" stroke-opacity=".12"/></g><g class="fade" style="animation-delay:2.20s"><text x="36" y="376" font-size="10.5" letter-spacing="2" fill="#6fa8b8">ASMITCOD // PROFILE.OS</text><text x="764" y="376" text-anchor="end" font-size="10.5" letter-spacing="2" fill="#6fa8b8">SYNCED 2026-11-03</text></g><g clip-path="url(#clip)" pointer-events="none"><rect class="scan" x="0" y="0" width="800" height="70" fill="url(#scan)"/><rect width="800" height="396" fill="url(#lines)"/></g><path class="frame" d="M18,1 H799 V378 L782,395 H1 V18 Z" pathLength="1" fill="none" stroke="#00f0ff" stroke-width="2" filter="url(#glow)"/>
+</svg>
