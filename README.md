@@ -1,22 +1,14 @@
-<h1 align="center">Hi, I'm Asmit 👋</h1>
-
-## GitHub Contributions
+<h3 align="center"><code>asmit@github ~ $ ./contributions.sh</code></h3>
 
 <p align="center">
-  <img src="./contrib-heatmap.svg" width="100%" alt="GitHub Contribution Heatmap"/>
+  <img src="./contrib-heatmap.svg" width="100%" alt="GitHub contribution heatmap" />
 </p>
 
-<p align="center">
-  <img src="./info-card.svg" width="100%" alt="Profile Information Card"/>
-</p>
+<h3 align="center"><code>asmit@github ~ $ whoami</code></h3>
 
 <table align="center">
   <tr>
-    <td><img src="ascii-portrait.svg" alt="ASCII portrait" /></td>
-    <td><img src="info-card.svg" alt="Info card" /></td>
+    <td width="50%"><img src="./ascii-portrait.svg" width="100%" alt="ASCII portrait" /></td>
+    <td width="50%"><img src="./info-card.svg" width="100%" alt="GitHub stats" /></td>
   </tr>
 </table>
-
-<p align="center">
-  <a href="https://github.com/Asmitcod">GitHub</a>
-</p>
