@@ -34,9 +34,10 @@ jobs:
         run: |
           python scripts/fetch_contributions.py
 
-      - name: Generate Neofetch info card
-        run: |
-          python scripts/make_info_card.py
+      - name: Generate neotechinfo card
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python scripts/make_info_card.py
 
       - name: Render contribution heatmap
         run: |
