@@ -37,7 +37,7 @@ REACH = "github.com/Asmitcod"
 EMAIL = ""                                                    # edit me (optional)
 
 DEGREE_START = date(2023, 8, 1)
-DEGREE_END = date(2027, 7, 31)
+DEGREE_END = date(2027, 5, 31)
 
 # ---------------------------------------------------------------- style
 W, H = 800, 372
