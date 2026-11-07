@@ -3,7 +3,7 @@
 <table align="center">
   <tr>
     <td width="50%">
-      <img src="./ascii-portrait.svg" width="100%" alt="ASCII portrait" />
+      <img src="./ascii-portrait1.svg" width="100%" alt="ASCII portrait" />
     </td>
     <td width="50%">
       <img src="./info-card.svg" width="100%" alt="GitHub stats" />
