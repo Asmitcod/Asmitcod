@@ -17,6 +17,11 @@
 
 <p align="center"><sub>Every building is a day; taller means more contributions.</sub></p>
 
+<picture>
+  <source media="(prefers-color-scheme: light)" srcset="https://www.gitskins.com/api/section/metro-map?username=asmitcod&mode=light" />
+  <img src="https://www.gitskins.com/api/section/metro-map?username=asmitcod&mode=dark" width="100%" alt="My repositories as a metro map, one line per language" />
+</picture>
+
 
 <h3 align="center"><code>Asmitcod@github ~ $ ./contributions.sh</code></h3>
 
