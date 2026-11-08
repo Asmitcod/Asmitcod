@@ -11,6 +11,13 @@
   </tr>
 </table>
 
+<p align="center">
+  <img src="https://www.gitskins.com/api/section/city?username=asmitcod&theme=aurora&avatar=https%3A%2F%2Favatars.githubusercontent.com%2Fu%2F188459021%3Fu%3Dbc434fd4d3dd3fd178a2720ee78b82a941e0bb98%26v%3D4" alt="asmitcod city visual" />
+</p>
+
+<p align="center"><sub>Every building is a day; taller means more contributions.</sub></p>
+
+
 <h3 align="center"><code>Asmitcod@github ~ $ ./contributions.sh</code></h3>
 
 <p align="center">
