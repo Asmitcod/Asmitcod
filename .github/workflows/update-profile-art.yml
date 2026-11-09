@@ -43,6 +43,10 @@ jobs:
         run: |
           python scripts/render_heatmap.py
 
+      - name: Generate status card
+        run: |
+          python scripts/makr_statuscard.py
+          
       - name: Commit and push generated files
         run: |
           git config user.name "github-actions[bot]"
@@ -51,6 +55,7 @@ jobs:
           git add data/contributions.json
           git add info-card.svg
           git add contrib-heatmap.svg
+          git add status-hud.svg
 
           git diff --cached --quiet || git commit -m "Update GitHub profile art"
 
