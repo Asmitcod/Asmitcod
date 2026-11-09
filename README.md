@@ -35,14 +35,14 @@
   <img src="https://skillicons.dev/icons?i=python,java,c,cpp,js,ts,react,html,css,nodejs,fastapi,supabase,postgres,git,github,docker,aws,arduino,raspberrypi,linux&perline=10" alt="My Technical Skills" />
 </p>
 
+<p align="center">
+  <img src="./status-hud.svg?v=1" width="100%" alt="Status" />
+</p>
+
 <h3 align="center"><code>Asmitcod@github ~ $ ./links.sh</code></h3>
 
 <p align="center">
   <b>AI & Robotics Engineer · Developer · Problem Solver</b>
-</p>
-
-<p align="center">
-  <img src="./status-hud.svg?v=1" width="100%" alt="Status" />
 </p>
 
 <p align="center">
