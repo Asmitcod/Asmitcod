@@ -45,7 +45,7 @@ jobs:
 
       - name: Generate status card
         run: |
-          python scripts/makr_statuscard.py
+          python scripts/makr_status_card.py
           
       - name: Commit and push generated files
         run: |
