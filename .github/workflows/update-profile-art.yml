@@ -1,60 +1,66 @@
-name: Update contribution city
+name: Update GitHub Profile Art
 
 on:
   schedule:
-    - cron: "17 */6 * * *"      # every 6 hours
-  workflow_dispatch:             # "Run workflow" button
-  push:
-    branches: [main]
-    paths:
-      - "scripts/make_city.py"
-      - ".github/workflows/update-city.yml"
+    - cron: "0 0 * * *"
+
+  workflow_dispatch:
 
 permissions:
   contents: write
 
-concurrency:
-  group: update-city
-  cancel-in-progress: true
-
 jobs:
-  build:
+  update:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
-      # 1) refresh data/contributions.json (your existing script)
-      - name: Fetch contributions
-        env:
-          GH_USER: Asmitcod
-          GH_TOKEN: ${{ secrets.PROFILE_TOKEN || secrets.GITHUB_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.PROFILE_TOKEN || secrets.GITHUB_TOKEN }}
-        run: python scripts/fetch_contributions.py
-
-      # 2) your existing heatmap step stays as it is, e.g.:
-      # - name: Build heatmap
-      #   run: python scripts/<your-heatmap-script>.py
-
-      # 3) NEW: build the 3D city (stdlib only, no pip install)
-      - name: Build contribution city
-        env:
-          GH_USER: Asmitcod
-        run: python scripts/make_city.py
-
-      - name: Commit if changed
+      - name: Install dependencies
         run: |
-          git config user.name  "github-actions[bot]"
+          python -m pip install --upgrade pip
+          pip install -r scripts/requirements.txt
+
+      - name: Fetch GitHub contributions
+        env:
+          GH_PROFILE_USER: Asmitcod
+        run: |
+          python scripts/fetch_contributions.py
+
+      - name: Generate neotechinfo card
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python scripts/make_info_card.py
+
+      - name: Render contribution heatmap
+        run: |
+          python scripts/render_heatmap.py
+
+      - name: Generate contribution city
+        run: |
+          python scripts/make_city.py
+
+      - name: Generate status card
+        run: |
+          python scripts/make_status_card.py
+
+      - name: Commit and push generated files
+        run: |
+          git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add contrib-city.svg data/contributions.json
-          # also add contrib-heatmap.svg here if your other workflow doesn't commit it
-          if git diff --cached --quiet; then
-            echo "No changes."
-          else
-            git commit -m "chore: update contribution city"
-            git pull --rebase origin main
-            git push
-          fi
+
+          git add data/contributions.json
+          git add info-card.svg
+          git add contrib-heatmap.svg
+          git add contrib-city.svg
+          git add status-hud.svg
+
+          git diff --cached --quiet || git commit -m "Update GitHub profile art"
+
+          git push origin HEAD:${GITHUB_REF_NAME}
