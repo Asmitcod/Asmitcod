@@ -1,4 +1,3 @@
-
 name: Update GitHub Profile Art
 
 on:
@@ -43,20 +42,6 @@ jobs:
         run: |
           python scripts/render_heatmap.py
 
-      - name: Generate status card
-        run: |
-          python scripts/make_status_card.py
-          
-      - name: Commit and push generated files
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-          git add data/contributions.json
-          git add info-card.svg
-          git add contrib-heatmap.svg
-          git add status-hud.svg
-
-          git diff --cached --quiet || git commit -m "Update GitHub profile art"
-
-          git push origin HEAD:${GITHUB_REF_NAME}
+      - name: Generate contribution city
+        env:
+          GH_USER:
