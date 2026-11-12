@@ -11,6 +11,16 @@
   </tr>
 </table>
 
+<p align="center"> <img src="./contrib-city.svg" alt="3D contribution city for @Asmitcod" width="840" /> </p>
+
+<sub align="center">Every building is a day; taller means more contributions.</sub>
+
+<picture>
+  <source media="(prefers-color-scheme: light)" srcset="https://www.gitskins.com/api/section/metro-map?username=asmitcod&mode=light" />
+  <img src="https://www.gitskins.com/api/section/metro-map?username=asmitcod&mode=dark" width="100%" alt="My repositories as a metro map, one line per language" />
+</picture>
+
+
 <h3 align="center"><code>Asmitcod@github ~ $ ./contributions.sh</code></h3>
 
 <p align="center">
@@ -23,14 +33,14 @@
   <img src="https://skillicons.dev/icons?i=python,java,c,cpp,js,ts,react,html,css,nodejs,fastapi,supabase,postgres,git,github,docker,aws,arduino,raspberrypi,linux&perline=10" alt="My Technical Skills" />
 </p>
 
+<p align="center">
+  <img src="./status-hud.svg?v=1" width="100%" alt="Status" />
+</p>
+
 <h3 align="center"><code>Asmitcod@github ~ $ ./links.sh</code></h3>
 
 <p align="center">
   <b>AI & Robotics Engineer · Developer · Problem Solver</b>
-</p>
-
-<p align="center">
-  <img src="./status-hud.svg?v=1" width="100%" alt="Status" />
 </p>
 
 <p align="center">
