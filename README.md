@@ -54,3 +54,5 @@
     <img src="https://img.shields.io/badge/Instagram-asmt.bsht-E4405F?style=for-the-badge&logo=instagram&logoColor=white" alt="Instagram" />
   </a>
 </p>
+
+<p align="center"><sub>Built by Asmit Bisht</sub></p>
