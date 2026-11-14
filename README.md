@@ -15,7 +15,7 @@
 
 <sub align="center">Every building is a day; taller means more contributions.</sub>
 
-<p align="center"> <img src="./contrib-metro.svg" alt="Commit metro: every line is a language, every stop a project" width="840" /> </p>
+<p align="center"> <img src="./contrib-metro.svg" alt="Commit metro: Every line is a language, every stop a project" width="840" /> </p>
 
 
 <h3 align="center"><code>Asmitcod@github ~ $ ./contributions.sh</code></h3>
